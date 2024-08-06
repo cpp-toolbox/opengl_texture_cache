@@ -6,6 +6,15 @@
 #include <string>
 #include <vector>
 
+/**
+ * \brief minimize the footprint of creating textures with opengl
+ *
+ * \details when working with opengl, textures need to be created and bound into the opengl context, also if you have
+ * two different objects that share textures then there is no point in uploading more image data to the cpu, instead
+ * just re-use it, in order to facilitate that exact feature this class was created
+ *
+ * \author cuppajoeman
+ */
 class OpenGLTextureCache {
   public:
     // Load a texture from a file and return its OpenGL texture ID

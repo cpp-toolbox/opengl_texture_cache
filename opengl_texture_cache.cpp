@@ -18,30 +18,10 @@ GLuint OpenGLTextureCache::load_texture(const std::string &path) {
 
     TextureData texture_info = load_texture_from_file(path);
 
-    //    //    if (data) {
-    //    //        GLenum format = 0;
-    //    //        if (num_components == 1) {
-    //    //            format = GL_RED;
-    //    //        } else if (num_components == 3) {
-    //    //            format = GL_RGB;
-    //    //        } else if (num_components == 4) {
-    //    //            format = GL_RGBA;
-    //    //        }
-    //    //
-    //    //        // TODO can I refactor this into a function called bind/prepare_texture_data_for_opengl
-    //    //        glBindTexture(GL_TEXTURE_2D, texture_id);
-    //    //
-    //    //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    //    //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    //    //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    //    //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    //    //
-    //    //        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-    //    //        glGenerateMipmap(GL_TEXTURE_2D);
-
     // Generate and bind a new OpenGL texture
     GLuint texture_id;
     glGenTextures(1, &texture_id);
+
     glBindTexture(GL_TEXTURE_2D, texture_id);
 
     // Set texture parameters
@@ -59,7 +39,8 @@ GLuint OpenGLTextureCache::load_texture(const std::string &path) {
         format = GL_RGBA;
     }
 
-    // Upload the texture data to the GPU
+    // this binds the image data to our texture_id so that we can load in textures later on
+    // Upload the texture data to the GPU,
     glTexImage2D(GL_TEXTURE_2D, 0, format, texture_info.width, texture_info.height, 0, format, GL_UNSIGNED_BYTE,
                  texture_info.image_data.data());
     spdlog::get(Systems::graphics)->info("generated a new image for {}", path);
