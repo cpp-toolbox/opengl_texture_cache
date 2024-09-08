@@ -1,7 +1,12 @@
 #ifndef OPENGL_TEXTURE_CACHE_HPP
 #define OPENGL_TEXTURE_CACHE_HPP
 
+#if defined(__APPLE__)
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
+
 #include <unordered_map>
 #include <string>
 #include <vector>
